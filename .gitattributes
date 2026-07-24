@@ -6,3 +6,4 @@
 *.onnx filter=lfs diff=lfs merge=lfs -text
 *.pdf filter=lfs diff=lfs merge=lfs -text
 *.pt filter=lfs diff=lfs merge=lfs -text
+src/FAST_LIO_ROS2/doc/** filter=lfs diff=lfs merge=lfs -text
