@@ -1,0 +1,57 @@
+# 定义枚举字段
+int32 value
+
+# 被动模式
+int32 PASSIVE_DEFAULT = 1
+
+# 软急停
+int32 SOFT_EMERGENCY_STOP = 2
+
+# 阻尼模式
+int32 DAMPING_DEFAULT = 3
+
+# 零力矩模式
+int32 ZERO_TORQUE_DEFAULT = 4
+
+# 位控站立模式
+int32 JOINT_DEFAULT = 100
+
+# 位控关节锁定模式
+int32 JOINT_FREEZE = 101
+
+# 力控站立模式
+int32 STAND_DEFAULT = 200
+
+# 站立+身体运动模式
+int32 STAND_BODY_CONTROL = 201
+
+# 行走模式
+int32 LOCOMOTION_DEFAULT = 300
+
+# 跑步模式
+int32 RUN_DEFAULT = 301
+
+# 越野模式
+int32 LOCOMOTION_STEP = 302
+
+# VR遥操模式
+int32 VR_REMOTE_CONTROLLER = 400
+
+# 技能类
+# 坐下
+int32 SIT_DOWN_DEFAULT = 2000
+
+# 蹲下
+int32 CROUCH_DOWN_DEFAULT = 2002
+
+# 躺倒
+int32 LIE_DOWN_DEFAULT = 2004
+
+# 平躺站起
+int32 STAND_UP_DEFAULT = 2005
+
+# 上楼梯
+int32 ASCEND_STAIRS = 2006
+
+# 下楼梯
+int32 DESCEND_STAIRS = 2008

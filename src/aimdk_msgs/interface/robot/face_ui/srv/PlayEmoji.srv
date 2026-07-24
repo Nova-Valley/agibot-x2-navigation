@@ -1,0 +1,72 @@
+
+# --------------------------------------------------------------------------------------------------------------
+# 输入表情参数单独控制灯光播放
+# --------------------------------------------------------------------------------------------------------------
+
+# ----------------------------------------------------
+# 请求头
+CommonRequest header
+
+#----------------------------------------------------
+# 表情 id
+uint8 emotion_id
+
+# 表情枚举
+uint8 EMOTION_UNKNOWN = 0           # 未知
+uint8 EMOTION_IDLE_BLINK = 1        # 眨眼
+uint8 EMOTION_IDLE_CALM_1 = 10      # 平静-眼睛变化
+uint8 EMOTION_IDLE_CALM_2 = 11      # 平静-眼睛变化
+uint8 EMOTION_IDLE_GAME = 20        # 平静-游戏
+uint8 EMOTION_IDLE_CUTE_1 = 30      # 平静-卖萌
+uint8 EMOTION_IDLE_CUTE_2 = 31      # 平静-卖萌
+uint8 EMOTION_IDLE_CUTE_3 = 32      # 平静-卖萌
+uint8 EMOTION_IDLE_CUTE_4 = 33      # 平静-卖萌
+uint8 EMOTION_EYE_CLOSE = 40        # 闭上眼
+uint8 EMOTION_EYE_OPEN = 50         # 睁开眼
+uint8 EMOTION_EYE_BORING_1 = 60     # 无聊
+uint8 EMOTION_EYE_ABNORMAL = 70     # 异常
+uint8 EMOTION_EYE_SLEEPY = 80       # 睡着
+uint8 EMOTION_EYE_HAPPY = 90        # 快乐
+uint8 EMOTION_EYE_EXTREMEHAPPY_1 = 100 # 加倍开心
+uint8 EMOTION_EYE_EXTREMEHAPPY_2 = 101 # 狂喜
+uint8 EMOTION_EYE_SAD = 110         # 悲伤
+uint8 EMOTION_EYE_SYMPATHY = 120    # 同情
+uint8 EMOTION_EYE_CONFUSE = 130     # 疑惑
+uint8 EMOTION_EYE_SHOCK = 140       # 震惊
+uint8 EMOTION_EYE_ACTCUTE = 150     # 撒娇
+uint8 EMOTION_EYE_SERIOUS = 160     # 严肃
+uint8 EMOTION_EYE_THINKING = 170    # 思考
+uint8 EMOTION_EYE_ANGRY = 180       # 愤怒
+uint8 EMOTION_EYE_EXTREMEANGRY = 190 # 加倍愤怒
+uint8 EMOTION_EYE_ADORE = 200       # 崇拜
+uint8 EMOTION_EYE_EXTREMEADORE = 210 # 加倍崇拜
+uint8 EMOTION_EYE_CHARGE = 220      # 充电
+
+
+# ----------------------------------------------------
+## 播放模式枚举
+uint8 mode 
+
+# 仅播放一次
+uint8 EMOTION_MODE_ONCE = 1
+
+# 循环播放
+uint8 EMOTION_MODE_LOOP = 2
+
+# ----------------------------------------------------
+# 播放优先级
+int32 priority
+
+# ---------------------------------------------------- req
+---
+# ---------------------------------------------------
+
+# ---------------------------------------------------- resp
+# 响应头
+CommonResponse header
+
+#-----------------------------------------------------
+# 是否控制成功
+bool success
+
+string message

@@ -1,0 +1,37 @@
+---
+launch:
+  - arg: {name: start_rviz, default: 'true', description: automatically start rviz}
+
+  - arg: {name: rviz_path,   default: $(find-pkg-share spark_fast_lio)/rviz/ouster_vbr.rviz, description: rviz file to load}
+  - arg: {name: config_path, default: $(find-pkg-share spark_fast_lio)/config/ouster_vbr.yaml, description: Model-specific configuration}
+
+  - node:
+      pkg: spark_fast_lio
+      exec: spark_lio_mapping
+      name: lio_mapping
+      output: screen
+      on_exit: shutdown
+
+      remap:
+        - { from: 'lidar', to: '/ouster/points' }
+        - { from: 'imu',   to: 'imu/data'   }
+
+      param:
+        - name: "common.lidar_frame"
+          value: "os_sensor"
+        - name: "common.imu_frame"
+          value: "imu_link_ned"
+        - name: "gravity_alignment.enable_gravity_alignment"
+          value: false
+
+        - from: $(var config_path)
+
+  - node:
+      if: $(var start_rviz)
+      pkg: rviz2
+      exec: rviz2
+      name: "rviz"
+      launch-prefix: "nice"
+      output: "screen"
+      args: >
+        -d $(var rviz_path)

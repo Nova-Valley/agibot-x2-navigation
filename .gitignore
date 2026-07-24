@@ -1,6 +1,8 @@
 devel/
 logs/
 build/
+install/
+log/
 bin/
 lib/
 msg_gen/
@@ -43,6 +45,11 @@ qtcreator-*
 /planning/src
 
 *~
+
+# Local workspace and runtime artifacts
+.DS_Store
+audio_recordings/
+__pycache__/
 
 # Emacs
 .#*

@@ -1,0 +1,11 @@
+CommonRequest header
+
+PlayMediaFileRequest media_file_req
+
+# ---------------------------------------------------- req
+---
+# ---------------------------------------------------  resp
+
+CommonResponse header
+
+PlayTtsResponse tts_resp

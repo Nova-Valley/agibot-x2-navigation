@@ -1,0 +1,48 @@
+---
+launch:
+  - arg: {name: start_rviz, default: 'true', description: automatically start rviz}
+  - arg: {name: rviz_path,  default: $(find-pkg-share spark_fast_lio)/rviz/rviz2.rviz, description: rviz file to load}
+  - arg: {name: robot_name, default: 'rrghusky', description: 'The actual robot used when acquiring data' }
+
+  # Frames
+  - arg: {name: map_frame, default: 'odom'}
+  - arg: {name: base_frame, default: 'base_link'}
+
+  - node:
+      namespace: $(var robot_name)
+      pkg: spark_fast_lio
+      exec: spark_lio_mapping
+      name: lio_mapping
+      output: screen
+      on_exit: shutdown
+
+      remap:
+        - { from: 'lidar', to: 'lidar_points' }
+        - { from: 'imu',   to: 'imu/data'   }
+
+      param:
+        - name: "common.lidar_frame"
+          value: "$(var robot_name)/base"
+        - name: "common.imu_frame"
+          value: "$(var robot_name)/imu_link"
+        - name: "common.map_frame"
+          value: "$(var robot_name)/$(var map_frame)"
+        # - name: "common.base_frame"
+        #   value: "$(var robot_name)/$(var base_frame)"
+        - name: "common.visualization_frame"
+          value: "base"
+
+        - name: "gravity_alignment.enable_gravity_alignment"
+          value: false
+
+        - from: $(find-pkg-share spark_fast_lio)/config/dcist_rrg/$(var robot_name).yaml
+
+  - node:
+      if: $(var start_rviz)
+      pkg: rviz2
+      exec: rviz2
+      name: "rviz"
+      launch-prefix: "nice"
+      output: "screen"
+      args: >
+        -d $(find-pkg-share spark_fast_lio)/rviz/dcist_rrg/$(var robot_name).rviz

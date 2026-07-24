@@ -1,0 +1,66 @@
+ci:
+  autofix: true
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-yaml
+        exclude: \.clang-format$
+      - id: check-json
+      - id: check-xml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-added-large-files
+      - id: check-merge-conflict
+
+  ######################################################################
+  # Python Formatting
+  ######################################################################
+  # For Python import sorting
+  - repo: https://github.com/pycqa/isort
+    rev: "5.12.0"
+    hooks:
+      - id: isort
+
+  # Yet Another Python Formatter
+  - repo: https://github.com/pre-commit/mirrors-yapf
+    rev: v0.32.0
+    hooks:
+      - id: yapf
+        additional_dependencies: [toml]
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 5.0.4
+    hooks:
+      - id: flake8
+        exclude: 'python/utils/download_datasets'
+
+  ######################################################################
+  # Markdown Formatting
+  ######################################################################
+  - repo: https://github.com/executablebooks/mdformat
+    rev: 0.7.9
+    hooks:
+      - id: mdformat
+        exclude: 'github/'
+
+  ######################################################################
+  # C++ Formatting
+  ######################################################################
+  - repo: https://github.com/pre-commit/mirrors-clang-format
+    rev: "v16.0.6"
+    hooks:
+      - id: clang-format
+        exclude: '.*\.py$'
+
+  - repo: https://github.com/cpplint/cpplint
+    rev: "1.6.1"
+    hooks:
+      - id: cpplint
+        args:
+          [
+            # TODO(hlim): Remove `-runtime/string` and `-build/include`
+            "--filter=-whitespace/line_length,-legal/copyright,-build/include_order,-runtime/references,-build/c++11,-build/namespaces, -build/header_guard, -runtime/string, -build/include",
+          ]
+        exclude: 'spark_fast_lio/LOG|spark_fast_lio/PCD|spark_fast_lio/third_party|spark_fast_lio/include/matplotlibcpp.h'

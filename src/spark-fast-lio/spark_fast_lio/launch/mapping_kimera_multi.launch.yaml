@@ -1,0 +1,58 @@
+---
+launch:
+  - arg: {name: start_rviz, default: 'true', description: automatically start rviz}
+  - arg: {name: scene_id,   default: 'acl_jackal',  description: 'Scene name for input message topics' }
+  - arg: {name: robot_name, default: 'acl_jackal2', description: 'The actual robot used when acquiring data' }
+
+  # Frames
+  # NOTE(hlim): In 12_08 scenes, some robots need
+  # `lidar_frame` - ouster_link,  `imu_frame` - ouster_link
+  - arg: {name: lidar_frame, default: 'velodyne_link'}
+  - arg: {name: imu_frame,   default: 'forward_imu_optical_frame'}
+  - arg: {name: map_frame,   default: 'odom'}
+  - arg: {name: base_frame,  default: 'base_link'}
+
+  # TODO(hlim): To be generalized
+  # - arg: {name: config_path, default: $(find-pkg-share spark_fast_lio)/config/kimera_multi/acl_jackal2.yaml, description: Model-specific configuration}
+  # - let:
+  #   name: config_path
+  #   value: $(find-pkg-share spark_fast_lio)/config/kimera_multi/$(var scene_id).yaml
+
+  - node:
+      namespace: $(var scene_id)
+      pkg: spark_fast_lio
+      exec: spark_lio_mapping
+      name: lio_mapping
+      output: screen
+      on_exit: shutdown
+
+      remap:
+        - { from: 'lidar', to: 'lidar_points' }
+        - { from: 'imu',   to: 'forward/imu' }
+
+      param:
+        - name: "common.lidar_frame"
+          value: "$(var scene_id)/$(var lidar_frame)"
+        - name: "common.imu_frame"
+          value: "$(var scene_id)/$(var imu_frame)"
+        - name: "common.map_frame"
+          value: "$(var scene_id)/$(var map_frame)"
+        - name: "common.base_frame"
+          value: "$(var scene_id)/$(var base_frame)"
+        - name: "common.visualization_frame"
+          value: "base"
+
+        - name: "gravity_alignment.enable_gravity_alignment"
+          value: false
+
+        - from: $(find-pkg-share spark_fast_lio)/config/kimera_multi/$(var scene_id).yaml
+
+  - node:
+      if: $(var start_rviz)
+      pkg: rviz2
+      exec: rviz2
+      name: "rviz"
+      launch-prefix: "nice"
+      output: "screen"
+      args: >
+        -d $(find-pkg-share spark_fast_lio)/rviz/kimera_multi/$(var scene_id).rviz

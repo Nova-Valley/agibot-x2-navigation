@@ -1,0 +1,54 @@
+/**:
+  ros__parameters:
+    preprocess:
+      lidar_type: 3               # 1 for Livox serials LiDAR, 2 for Velodyne LiDAR, 3 for ouster LiDAR,
+      scan_line: 64
+      scan_rate: 10               # only need to be set for velodyne, unit: Hz,
+      timestamp_unit: 3           # the unit of time/t field in the PointCloud2 rostopic: 0-second, 1-milisecond, 2-microsecond, 3-nanosecond.
+      blind: 1.0
+      blind_for_human_pilot: 1.0  # This parameter is to reject cloud points from human pilots
+
+    mapping:
+      acc_cov: 0.1
+      gyr_cov: 0.1
+      b_acc_cov: 0.0001
+      b_gyr_cov: 0.0001
+      fov_degree: 360.0
+      det_range: 150.0
+      extrinsic_est_en: false      # true: enable the online estimation of IMU-LiDAR extrinsic,
+
+      # NOTE(hlim): In `vbr_calib.yaml`, it says:
+      #imu:
+      #  T_b:
+      #  - [0.9994652045891429, 0.03194161690749185, -0.00698788259543323, -0.045630250613467524]
+      #  - [-0.03200263570684775, 0.9994490166874298, -0.008798074077210848, -0.00784852988506693]
+      #  - [0.006703021917434096, 0.009017052443448963, 0.9999368527795895, -0.6084150115067585]
+      #  - [0.0, 0.0, 0.0, 1.0]
+      # However, this matrix is tranformation of IMU w.r.t. LiDAR frame.
+      # What we need is transformation LiDAR w.r.t. (or to) IMU frame; thus, the inverse matrix should be given
+      extrinsic_T: [ 0.04943289, 0.01478779, 0.60798871 ]
+      extrinsic_R: [0.99946541, -0.03200262, 0.00670301,
+                    0.03194165,  0.99944911, 0.009017,
+                    -0.0069879, -0.00879813, 0.99993691  ]
+
+    filter_size_map: 0.5
+
+    publish:
+      path_en: true
+      scan_publish_en: true        # false: close all the point cloud output
+      dense_publish_en: true       # false: low down the points number in a global-frame point clouds scan.
+      scan_lidarframe_pub_en: true # true: output the point cloud scans in the LiDAR frame
+      scan_bodyframe_pub_en: true  # true: output the point cloud scans in IMU-body frame
+      scan_baseframe_pub_en: false  # true: output the point cloud scans in the base frame
+
+    pcd_save:
+      pcd_save_en: false
+      interval: -1                 # how many LiDAR frames saved in each pcd file;
+      # -1 : all frames will be saved in ONE pcd file, may lead to memory crash when having too much frames.
+
+    verbose: true
+    runtime_pos_log_enable: false
+    point_filter_num_for_preprocessing: 1 # If it is set to `1`, full point cloud gonna be publlished
+    point_filter_num: 4                   # For pose estimation.
+    max_iteration: 4
+    cube_side_length: 1000.0

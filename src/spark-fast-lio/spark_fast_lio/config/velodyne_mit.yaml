@@ -1,0 +1,45 @@
+/**:
+  ros__parameters:
+    preprocess:
+      lidar_type: 2               # 1 for Livox serials LiDAR, 2 for Velodyne LiDAR, 3 for ouster LiDAR,
+      scan_line: 16
+      scan_rate: 10               # only need to be set for velodyne, unit: Hz,
+      timestamp_unit: 2           # the unit of time/t field in the PointCloud2 rostopic: 0-second, 1-milisecond, 2-microsecond, 3-nanosecond.
+      blind: 0.5
+      blind_for_human_pilot: 1.0  # This parameter is to reject cloud points from human pilots
+
+    mapping:
+      acc_cov: 0.1
+      gyr_cov: 0.1
+      b_acc_cov: 0.0001
+      b_gyr_cov: 0.0001
+      fov_degree: 360.0
+      det_range: 150.0
+      extrinsic_est_en: false      # true: enable the online estimation of IMU-LiDAR extrinsic,
+
+      extrinsic_T: [ 0.07025405, -0.10158666, -0.04942693 ]
+      extrinsic_R: [-2.9046527369e-02, -9.9957706196e-01, -1.7154151723e-03,
+                    -6.9278006858e-02, 3.7251435690e-03, -9.9759064383e-01,
+                    9.9717458733e-01, -2.8857692625e-02, -6.9356874944e-02  ]
+
+    filter_size_map: 0.3
+
+    publish:
+      path_en: true
+      scan_publish_en: true        # false: close all the point cloud output
+      dense_publish_en: true       # false: low down the points number in a global-frame point clouds scan.
+      scan_lidarframe_pub_en: true # true: output the point cloud scans in the LiDAR frame
+      scan_bodyframe_pub_en: true  # true: output the point cloud scans in IMU-body frame
+      scan_baseframe_pub_en: false  # true: output the point cloud scans in the base frame
+
+    pcd_save:
+      pcd_save_en: false
+      interval: -1                 # how many LiDAR frames saved in each pcd file;
+      # -1 : all frames will be saved in ONE pcd file, may lead to memory crash when having too much frames.
+
+    verbose: true
+    runtime_pos_log_enable: false
+    point_filter_num_for_preprocessing: 1 # If it is set to `1`, full point cloud gonna be publlished
+    point_filter_num: 4                   # For pose estimation.
+    max_iteration: 4
+    cube_side_length: 1000.0

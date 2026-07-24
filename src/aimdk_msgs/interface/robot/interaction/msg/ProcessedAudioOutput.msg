@@ -1,0 +1,4 @@
+MessageHeader header
+uint32 stream_id
+AudioVadStateType audio_vad_state
+uint8[] audio_data

@@ -1,0 +1,23 @@
+<launch>
+  <!-- Launch file for Ouster OS1-64 -->
+  <arg name="rviz" default="true" />
+  <arg name="save_dir" default="" />
+  <arg name="sequence_name" default="" />
+  <arg name="robot_name" default="" />
+
+  <rosparam command="load" file="$(find spark_fast_lio)/config/dcist/hamilton.yaml" />
+
+  <param name="common/save_dir" type="string" value="$(arg save_dir)"/>
+  <param name="common/sequence_name" type="string" value="$(arg sequence_name)"/>
+  <param name="common/robot_name" type="string" value="$(arg robot_name)"/>
+  <param name="common/lid_topic" type="string" value="/$(arg robot_name)/lidar_points"/>
+  <!-- Note that we use IMU sensor in D455 camera -->
+  <param name="common/imu_topic" type="string" value="/$(arg robot_name)/forward/imu"/>
+
+  <node pkg="spark_fast_lio" type="spark_lio_mapping" name="$(anon laserMapping)" output="screen" />
+
+  <group if="$(arg rviz)">
+  <node launch-prefix="nice" pkg="rviz" type="rviz" name="$(anon rviz)" args="-d $(find spark_fast_lio)/rviz/hamilton_rviz.rviz"/>
+  </group>
+
+</launch>
