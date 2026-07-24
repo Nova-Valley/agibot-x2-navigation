@@ -1,5 +1,7 @@
 # AgiBot Lingxi X2：SLAM 建图、定位与导航
 
+> A community-driven ROS 2 navigation framework for the AgiBot Lingxi X2.
+
 本仓库提供一套面向智元灵犀 X2 人形机器人的 ROS 2 流程，覆盖：
 
 - 激光雷达与 IMU 数据校正；
